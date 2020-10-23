@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型链</title>
+</head>
+<body>
+  <h4>1.认识原型链</h4>
+  <p>原型链是指每个对象的原型都指向一个上层的原型对象，直到遇到null，js中最顶层的一个对象是Object，<br/>
+它的原型是object.prototype，但是Object.prototype.__proto__ 是null。<br/>
+ </p>
+ <h4>2.原型链访问原理</h4>
+<p>访问一个对象的属性时，会先在自身属性中查找，找到返回；如果没有找到，则在自己的__proto__属性中找，<br/>
+  如果找到，则返回，否则在构造函数的原型对象中找，如果没有找到，则再沿着__proto__这条链向上查找，<br/>
+  找到返回，找不到，返回undefined。</p>
+  <h4>3.原型链实例</h4>
+ <p> function Str(){ }<br/>
+
+  function Employee(name,positon){<br/>
+      this.name = name;<br/>
+      this.positon = positon;<br/>
+      this.signIn = function(){<br/>
+          console.log(this.name+"is a "+this.positon);<br/>
+      }<br/>
+  }<br/>
+
+  Employee.prototype.age = 20;<br/>
+  Employee.prototype.printInfo = function(){<br/>
+      console.log(this.name,this.positon,this.age);<br/>
+  Employee.prototype.alan = new Str();<br/>
+
+  }</p>
+
+ <h4>4.理解prototype和__proto__</h4>
+<p>
+    function User(){}<br/>
+    var obj = new User();<br/>
+    User有两个属性：prototype和__proto__,其中prototype是服务于User创建的实例对象的,<br/>
+  由它创建的实例化对象是指向prototype的，如下验证所示：<br/>
+console.log(User.prototype == obj.__proto__);<br/>
+  当将User当做对象使用时，用它的__proto__属性。<br/>
+User.__proto__.view = function(){<br/>
+    console.log("nice");<br/>
+}</p>
+
+<p>创建一个数组对象arr,查看arr的__proto__属性，它指向Array的prototype对象<br/>
+let arr = ["a"];<br/>
+console.log(arr.concat("b"));<br/>
+console.dir(arr);<br/>
+console.log(arr.__proto__ == Array.prototype);<br/>
+创建一个一般对象，查看它的__proto__属性，指向Object的prototype对象<br/>
+let a ={};<br/>
+let b ={};<br/>
+console.log(a.__proto__ ===Object.prototype);<br/>
+console.log(b.__proto__ ===Object.prototype);<br/>
+console.log(Object.prototype.isPrototypeOf(a));</p>
+
+<h4>5.原型检测</h4>>
+
+ <p>
+  1.setPrototypeof的使用<br/>
+  console.log(Object.prototype.isPrototypeOf(a));<br/>
+  
+  2.setPrototypeof的使用<br/>
+  let a = {name:"alan"};<br/>
+  let b = {age:10};<br/>
+  Object.setPrototypeOf(a,b);<br/>
+  console.log(b);<br/>
+  
+  3.hasOwnProperty()只检测某一个对象的属性，in既可以读写某一个对象属性，也可以检测原型<br/>
+  console.log("age" in a);<br/>
+  console.log(a.hasOwnProperty("name"));<br/>
+  console.log(a.hasOwnProperty("age"));<br/>
+  console.log(a.age);<br/>
+ </p>
+</body>
+</html>
